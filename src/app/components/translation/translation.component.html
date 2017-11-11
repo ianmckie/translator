@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <div class="input-group input-group-lg col">
+      <input [(ngModel)]="toTranslate" (keyup)="getTranslation()" type="text" placeholder="To Translate" class="form-control">
+    </div>
+    <div class="input-group input-group-lg col">
+      <input type="text" class="form-control translation" placeholder="Translation" value="{{ this.translation }}">
+    </div>
+  </div>
+</div>
