@@ -1,0 +1,33 @@
+.jumbotron h2{
+    text-align: center;
+    margin-bottom: 30px
+}
+
+.main-input-group{
+    margin-bottom:60px;
+}
+
+.pinned-table{
+    margin-top:70px;
+}
+
+.pin-translation{
+    text-align: center;
+}
+
+.pin-translation button{
+    font-size: 16px;
+}
+
+.pin-translation button{
+    margin: 0 auto;
+}
+
+.custom-select{
+    font-size: 14px;
+}
+
+button, input{
+    -webkit-transition: all .2s, ease-in-out;
+    transition: all .2s, ease-in-out;
+}

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
+import { Jsonp } from '@angular/http/src/http';
 
 @Component({
   selector: 'app-translation',
@@ -12,36 +14,99 @@ export class TranslationComponent implements OnInit {
 
   toTranslate:string = '';
   translation:string = '';
-  primary:string = 'en';
-  secondary:string = 'es';
+  primaryLocale:string = 'en';
+  secondaryLocale:string = 'es';
+  amount:number = 20; 
+
+  storageItems:JSON;
+
+  // Country Listings
   countries: any[] = [
-    { id: 1, code: 'en', label: 'English'},
-    { id: 2, code: 'es', label: 'Spanish'},
-    { id: 3, code: 'de', label: 'German'},
-    { id: 4, code: 'fr', label: 'French'},
+    { id: 1, code: 'en', label: 'To English'},
+    { id: 2, code: 'es', label: 'To Spanish'},
+    { id: 3, code: 'de', label: 'To German'},
+    { id: 4, code: 'fr', label: 'To French'},
   ];
+
+  // Error message values
+  errorBody:string = 'This translation is already pinned';
+  errorTitle:string = 'Error';
 
   constructor(private dataservice:DataService) { 
     
   }
 
   ngOnInit() {
+    if(typeof localStorage !== undefined && localStorage.getItem('pinnedTranslations') !== null){
+      this.getLSTranslations();  
+    }
+
+    // Initialise popover for button error
+    jQuery('.btn-primary').popover({trigger: "manual"});
   }
 
-  getTranslation(language){
+  /* 
+   * Bound to primary input field. Once typing begins it calls the dataservice.
+   * Once returned, the value of the translation is set to the response
+   * 
+   */
+
+  getTranslation(){
+
     // If translation is empty reset translation input
     if(this.toTranslate === ''){
       this.translation = '';  
     }
     else{
-      this.dataservice.callWatsonApi(this.toTranslate, this.primary, this.secondary).subscribe((response) => {
+      this.dataservice.callWatsonApi(this.toTranslate, this.primaryLocale, this.secondaryLocale).subscribe((response) => {
         this.translation = response.translations[0].translation;
-        console.log(this.primary)
       });  
     }
   }
 
-  changeLanguage(language, languageAlt){
+  /* 
+   * Get translations from localStorage
+   * 
+   */
 
+  getLSTranslations(){
+    localStorage.setItem('pinnedTranslations','[{ "toTranslate":{ "locale" : "en", "value": "I like Cake" } , "translation":{ "locale" : "es", "value": "I do Like it" } }]'); 
+    this.storageItems = JSON.parse(localStorage.getItem('pinnedTranslations'));
+  }
+
+  /* 
+   * When the pin translation button is pressed add the current translation to localStorage
+   * 
+   */
+
+  pinTranslation(){
+
+    // Return if there is nothing in translation
+    if(this.translation === ''){
+      this.errorBody = "Nothing to pin";
+      return;
+    }
+
+    // Get current pinned translations
+    let currentTranslation = JSON.parse(localStorage.getItem('pinnedTranslations'));
+
+    // Loop through existing items and check if already exists
+    for(var i = 0;i<currentTranslation.length;i++) { 
+      if(currentTranslation[i].translation.value === this.translation){
+
+        // Show popover to warn people about existing translation
+        jQuery('.btn-primary').popover('show');
+        
+        return;
+      }
+    } 
+
+    // Push current translation
+    currentTranslation.push({ "toTranslate":{ "locale" : this.primaryLocale, "value": this.toTranslate } , "translation":{ "locale" : this.secondaryLocale, "value": this.translation } });
+
+    this.storageItems = currentTranslation;
+
+    // Add back to pinnedTranslations
+    localStorage.setItem('pinnedTranslations', JSON.stringify(currentTranslation));
   }
 }

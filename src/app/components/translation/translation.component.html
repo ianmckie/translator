@@ -1,37 +1,59 @@
 <div class="container">
-  <div class="row">
+
+  <div class="jumbotron">  
+    <h2>Translate from english</h2>
+
+    <div class="row main-input-group">
+      <!-- Translation Input Fields -->
+
+      <!-- To Translate -->
+      <div class="input-group input-group-lg col">
+        <input [(ngModel)]="toTranslate" (keyup)="getTranslation()" type="text" maxlength="20" placeholder="Start Typing" class="form-control">
+        <span class="input-group-addon">
+            
+          <!-- Load Locales -->
+          <select [(ngModel)]="secondaryLocale" class="custom-select" (change)="getTranslation()">
+            <option *ngFor="let c of countries" [value]="c.code" [selected]="c.code == secondary">{{c.label}}</option>
+          </select>
+        </span>
+      </div>
+
+      <!-- Translation -->
+      <div class="input-group input-group-lg col">
+        <input type="text" class="form-control translation" placeholder="Translation" value="{{translation}}">
+        
+        <!-- Pin Translation Button -->
+        <div *ngIf="translation !== ''" class="input-group-btn pin-translation">
+          <button type="button" class="btn btn-primary" data-toggle="popover" [title]="errorTitle" [attr.data-content]="errorBody" (click)="pinTranslation()">Pin Translation</button>     
+        </div>
+      </div><!-- END .input-group -->
     
-    <!-- Country Select boxes -->
+    </div><!-- END .row -->
 
-    <!-- Primary -->
-    <div class="input-group input-group-lg col">
-      <select [(ngModel)]="primary" class="custom-select">
-        <option *ngFor="let c of countries" [value]="c.code" [selected]="c.code === primary">{{c.label}}</option>
-      </select>
+    <h5>Characters Left</h5>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" [style.width.%]="(amount - toTranslate.length) * 5" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">{{this.amount - this.toTranslate.length}}</div>
     </div>
+  </div><!-- END .jumbotron -->
 
-    <!-- Secondary -->
-    <div class="input-group input-group-lg col">
-        <select [(ngModel)]="secondary" class="custom-select" (change)="getTranslation()">
-          <option *ngFor="let c of countries" [value]="c.code" [selected]="c.code == secondary">{{c.label}}</option>
-        </select>
-    </div>
-
-  </div>
-
-  <div class="row">
-
-    <!-- Translation Input Fields -->
-
-    <!-- To Translate -->
-    <div class="input-group input-group-lg col">
-      <input [(ngModel)]="toTranslate" (keyup)="getTranslation()" type="text" placeholder="To Translate" class="form-control">
-    </div>
-
-    <!-- Translation -->
-    <div class="input-group input-group-lg col">
-      <input type="text" class="form-control translation" placeholder="Translation" value="{{this.translation}}">
-    </div>
-  
+  <!-- If the local storage is empty don't show -->
+  <div class="row pinned-table" *ngIf="this.storageItems !== ''">
+      <h2>Your Pinned Translations</h2>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">To Translate</th>
+            <th scope="col">Translation</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of this.storageItems; let i = index;">
+                <td>{{ i + 1 }}</td>
+                <td>{{ items.toTranslate.value }}</td>
+                <td>{{ items.translation.value }}</td>  
+            </tr>
+        </tbody>
+      </table> 
   </div>
 </div>
