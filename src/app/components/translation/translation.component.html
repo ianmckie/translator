@@ -1,10 +1,37 @@
 <div class="container">
   <div class="row">
+    
+    <!-- Country Select boxes -->
+
+    <!-- Primary -->
+    <div class="input-group input-group-lg col">
+      <select [(ngModel)]="primary" class="custom-select">
+        <option *ngFor="let c of countries" [value]="c.code" [selected]="c.code === primary">{{c.label}}</option>
+      </select>
+    </div>
+
+    <!-- Secondary -->
+    <div class="input-group input-group-lg col">
+        <select [(ngModel)]="secondary" class="custom-select" (change)="getTranslation()">
+          <option *ngFor="let c of countries" [value]="c.code" [selected]="c.code == secondary">{{c.label}}</option>
+        </select>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <!-- Translation Input Fields -->
+
+    <!-- To Translate -->
     <div class="input-group input-group-lg col">
       <input [(ngModel)]="toTranslate" (keyup)="getTranslation()" type="text" placeholder="To Translate" class="form-control">
     </div>
+
+    <!-- Translation -->
     <div class="input-group input-group-lg col">
-      <input type="text" class="form-control translation" placeholder="Translation" value="{{ this.translation }}">
+      <input type="text" class="form-control translation" placeholder="Translation" value="{{this.translation}}">
     </div>
+  
   </div>
 </div>

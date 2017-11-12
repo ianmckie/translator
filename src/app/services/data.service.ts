@@ -9,8 +9,8 @@ export class DataService {
     console.log('Connected');
   }
 
-  callWatsonApi(toTranslate){
-    return this.http.get('http://ianmckie.com/watson/watson.php?toTranslate='+encodeURIComponent(toTranslate)+'&source=en&target=es')
+  callWatsonApi(toTranslate, primary, secondary){
+    return this.http.get('http://ianmckie.com/watson/watson.php?toTranslate='+encodeURIComponent(toTranslate)+'&source='+primary+'&target='+secondary)
       .map(res => res.json());
   }
 
