@@ -32,12 +32,10 @@ export class TranslationComponent implements OnInit {
   errorBody:string = 'This translation is already pinned';
   errorTitle:string = 'Error';
 
-  constructor(private dataservice:DataService) { 
-    
-  }
+  constructor(private dataservice:DataService) {}
 
   ngOnInit() {
-    if(typeof localStorage !== undefined && localStorage.getItem('pinnedTranslations') !== null){
+    if(typeof localStorage !== undefined && typeof localStorage.getItem('pinnedTranslations') !== 'undefined'){
       this.getLSTranslations();  
     }
 
@@ -70,7 +68,6 @@ export class TranslationComponent implements OnInit {
    */
 
   getLSTranslations(){
-    localStorage.setItem('pinnedTranslations','[{ "toTranslate":{ "locale" : "en", "value": "I like Cake" } , "translation":{ "locale" : "es", "value": "I do Like it" } }]'); 
     this.storageItems = JSON.parse(localStorage.getItem('pinnedTranslations'));
   }
 
@@ -88,7 +85,7 @@ export class TranslationComponent implements OnInit {
     }
 
     // Get current pinned translations
-    let currentTranslation = JSON.parse(localStorage.getItem('pinnedTranslations'));
+    let currentTranslation = localStorage.getItem('pinnedTranslations') !== null ? JSON.parse(localStorage.getItem('pinnedTranslations')) : [];
 
     // Loop through existing items and check if already exists
     for(var i = 0;i<currentTranslation.length;i++) { 
@@ -100,7 +97,7 @@ export class TranslationComponent implements OnInit {
         return;
       }
     } 
-
+    
     // Push current translation
     currentTranslation.push({ "toTranslate":{ "locale" : this.primaryLocale, "value": this.toTranslate } , "translation":{ "locale" : this.secondaryLocale, "value": this.translation } });
 

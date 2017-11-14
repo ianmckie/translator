@@ -1,18 +1,53 @@
-.jumbotron h2{
-    text-align: center;
-    margin-bottom: 30px
+/* BASE STYLES */
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
 }
 
-.main-input-group{
-    margin-bottom:60px;
+
+/* BODY STYLES */
+.app-header{
+    background-color:#007bff;
+    padding:60px 0;
+}
+
+.intro p{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    color:#FFF;
+}
+
+.jumbotron{
+    margin-bottom: 0;
+    padding: 20px;
+    -webkit-box-shadow: 0px 4px 8px 0px rgba(0,0,0,.5);
+    -moz-box-shadow: 0px 4px 8px 0px rgba(0,0,0,.5);
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,.5);
+}
+
+.progress{
+    -webkit-transition: width .3s ease-in-out; /* Safari */
+    transition: width .3s ease-in-out;
+    height: 7px;
+    margin-top: -4px;
+    border-top-right-radius:  0;
+    border-top-left-radius: 0;
+}
+
+.progress-bar{
+    font-size: 17px;
+    font-weight: lighter;
 }
 
 .pinned-table{
     margin-top:70px;
+    padding:0 20px;
 }
 
 .pin-translation{
     text-align: center;
+    padding:20px;
 }
 
 .pin-translation button{
