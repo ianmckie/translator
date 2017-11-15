@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
 import { Jsonp } from '@angular/http/src/http';
 
+import * as jQuery from 'jquery';
+
 @Component({
   selector: 'app-translation',
   templateUrl: './translation.component.html',
@@ -22,10 +24,9 @@ export class TranslationComponent implements OnInit {
 
   // Country Listings
   countries: any[] = [
-    { id: 1, code: 'en', label: 'To English'},
-    { id: 2, code: 'es', label: 'To Spanish'},
-    { id: 3, code: 'de', label: 'To German'},
-    { id: 4, code: 'fr', label: 'To French'},
+    { id: 1, code: 'es', label: 'To Spanish'},
+    { id: 2, code: 'de', label: 'To German'},
+    { id: 3, code: 'fr', label: 'To French'},
   ];
 
   // Error message values
@@ -40,7 +41,7 @@ export class TranslationComponent implements OnInit {
     }
 
     // Initialise popover for button error
-    jQuery('.btn-primary').popover({trigger: "manual"});
+    $('.btn-primary').popover({trigger: "manual"});
   }
 
   /* 
@@ -92,7 +93,7 @@ export class TranslationComponent implements OnInit {
       if(currentTranslation[i].translation.value === this.translation){
 
         // Show popover to warn people about existing translation
-        jQuery('.btn-primary').popover('show');
+        $('.btn-primary').popover('show');
         
         return;
       }
