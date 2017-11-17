@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
 import { Jsonp } from '@angular/http/src/http';
 
-import * as jQuery from 'jquery';
+declare var jQuery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-translation',

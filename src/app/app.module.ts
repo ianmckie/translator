@@ -10,6 +10,9 @@ import { TranslationComponent } from './components/translation/translation.compo
 
 import { DataService } from './services/data.service';
 
+declare var jquery:any;
+declare var $ :any;
+
 @NgModule({
   declarations: [
     AppComponent,
