@@ -1,5 +1,7 @@
 # TranslationStation
 
+This project uses Watson Transaltion API to transalte any phrase you want. It can translate them into 3 other langauges.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
 ## Development server
